@@ -33,4 +33,4 @@ artifacts:
 
 cache:
   paths:
-    - '/root/.nuget/packages/**/*' # Cache NuGet packages for faster builda
+    - '/root/.nuget/packages/**/*' # Cache NuGet packages for faster buildss
