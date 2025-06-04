@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+    variables:
+      PROJECT: WebApplication1
+      DOTNET_CORE_RUNTIME: 8.0
+phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0 # Specify the .NET version
+    commands:
+      - echo Installing dependencies...
+      - dotnet restore # Restore NuGet packages
+
+  pre_build:
+    commands:
+      - echo Running pre-build steps...
+      - dotnet clean # Clean the build environment
+
+  build:
+    commands:
+      - echo Building the project...
+      - dotnet build --configuration Release # Build the project in Release mode
+
+  post_build:
+    commands:
+      - echo Running post-build steps...
+      - dotnet publish -c Release -r linux-x64 -o ./build_output ./${PROJECT}/${PROJECT}.csproj --self-contained false
+      - cp Procfile ./build_output
+
+artifacts:
+  files:
+    - '**/*'
+    - base-directory: ./build_output
+  discard-paths: no # Retain directory structure
+
+cache:
+  paths:
+    - '/root/.nuget/packages/**/*' # Cache NuGet packages for faster builds

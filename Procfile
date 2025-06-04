@@ -1,0 +1,1 @@
+web: dotnet exec ./WebApplication1.csproj --urls http:/0.0.0.0.5000/
